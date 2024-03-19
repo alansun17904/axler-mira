@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 7A: $\cL^p(\mu)$}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+\usepackage{dsfont}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[1.] Recall from the definition of $\norm{\cdot}_\infty$ that 
+    \begin{gather*}
+        \norm{f}_\infty + \norm{g}_\infty = \inf\underbrace{\{t_1 + t_2 > 0: \mu(\{x\in X: |f(x)| > t_1\}) = 0\,\text{and}\,\mu(\{x\in X: |g(x)| > t_2\})=0\}}_{\text{(a)}}, \\
+        \norm{f + g}_\infty = \inf\underbrace{\{t> 0: \mu(\{x\in X: |f(x)+g(x)| > t_1\}) = 0\}}_{\text{(b)}}.
+    \end{gather*}
+    It suffices to show that for every $x \in \text{(a)}$ there exists some $x' \in\text{(b)}$ such that $x' \leq x$. It follows that if $x \in \text{(a)}$, then there exists $t_1, t_2$ such that $x = t_1 + t_2$ and 
+    \begin{gather*}
+        \mu(\{x \in X: |f(x)| > t_1 \}) = 0, \\
+        \mu(\{x \in X: |g(x)| > t_2 \}) = 0.
+    \end{gather*}
+    By the triangle inequality, since $|f(x) + g(x)| \leq |f(x)| + |g(x)|$, 
+    $\mu(\{x \in X: |f(x)| + |g(x)| > t_1 + t_2\}) \geq \mu(\{x \in X: |f(x) + g(x)| > t_1 + t_2 \})$. Thus, $x \in \text{(b)}$. This implies that $\norm{f+g}_\infty \leq \norm{f}_\infty + \norm{g}_\infty$.
+    
+    Now, for the homogeneity property, consider any $\alpha \in \F$, 
+    \begin{align*}
+        \norm{\alpha f}_\infty &= \inf\{t > 0: \mu(\{x \in X: |\alpha f(x)| > t\}) = 0\}, \\
+        &= \inf \{t > 0: \mu(\{x \in X: |\alpha||f(x)| > t\}) = 0\},
+        \intertext{since $|\alpha|$ is constant and $\alpha \neq 0$, it follows that}
+        \mu(\{x \in X: |\alpha||f(x)|>t\}) &= \mu(\{x\in X: |f(x)| > \frac{t}{|\alpha|}\}),
+        \intertext{This implies that}
+        \norm{\alpha f}_\infty &= |\alpha|\inf\{t' > 0: \mu(\{x\in X: |f(x)| > t'\})=0\}.
+    \end{align*}
+    The last inequality follows from the fact that for every $x\in X$ such that $|f(x)| > \frac{t}{|\alpha|}$, it follows that $|f(x)| > \frac{t'}{|\alpha|} \cdot |\alpha| > t'$.
+    \item[4.] For any $f,h: X\to\F$, let $t = \norm{h}_\infty$. Then, it follows from the definition of $\norm{\cdot}_\infty$ that for almost every $x\in X$ that \[
+    |f(x)h(x)| \leq |f(x)|\cdot t.
+    \]
+    Then, integrating both sides we have that \[
+    \norm{fh}_1 \leq \norm{f}_1 \cdot t = \norm{f}_1 \norm{h}_\infty.
+    \]
+    \item[10.] \begin{enumerate} 
+    \item It suffices to show that for every $x \in \ell^p, x\in \ell^q$ for $0 < p < q \leq \infty$. First consider the case where $q = \infty$. If $x = (x_1,x_2,\ldots)$ such that $x \in \ell^p$, then 
+    $\sum_{k=1}^\infty |x_k|^p < \infty$ which must imply since $f(x) = x^p$ is a monotone function for positive $x$, that $|x_1|, |x_2|, \ldots$ is bounded. Therefore, $x \in \ell^\infty$. 
+
+    Now, consider the case where $0 < p < q < \infty$. If $x \in \ell^p$, then it must be that $\lim_{k\to\infty} |x_k|^p = 0$. There must also only exist finitely many elements such that $|x_k|^p \geq 1$. Denote these elements as $\alpha_1, \ldots, \alpha_n$ and the remaining subsequence as $x_{k_1}, x_{k_2},\ldots$. And because $p < q$, there exists $\eps > 0$ such that $p + \eps = q$. So, for any $x_{k_i}$, it follows that 
+    \[
+    |x_{k_i}|^q = \underbrace{|x_{k_i}|^\eps}_{\leq 1} \cdot |x_{k_i}|^p \leq |x_{k_i}|^p
+    \]
+    Thus, $\sum_{i=1}^\infty |x_{k_i}|^q \leq \sum_{i=1}^\infty |x_{k_i}|^p < \infty$. And since there are only finitely many elements that are greater than 1, this implies that $x \in \ell^q$.
+
+    \item We first show the case where $q = \infty$. For any $x = (a_1, a_2,\ldots)$, let $x_k = (a_1, \ldots, a_k, 0, \ldots)$. Then,  $\norm{x_k}_p$ for $p < q$ is a monotonically increasing sequence. So, for any $k, \norm{x_k}_p \leq \norm{x_k}_\infty$, taking the supremum of both sides yields the desired result.
+
+    Now, consider the case where $q < \infty$. Since the $p$-norm is homogeneous, for any $\norm{x}_p \geq 1$, we can factor out some $\alpha \in \F$ such that $\norm{x} = \norm{\alpha\cdot x'} = |\alpha|\cdot\norm{x'}_p$ where $\norm{x'}_p = 1$. It remains to show that $\norm{x'}_p \geq \norm{x'}_q$. By the definition of $\norm{\cdot}_p$, since $\norm{x'}_p \leq 1$, it must be that for any $a_k \in x'$, $|a_k| < 1$. This implies that $|a_k|^p > |a_k|^q$, and since $\norm{x'}_p = 1$, this implies that $\norm{x'}_p \geq \norm{x'}_q$.
+    \end{enumerate}
+    \item[14.] First suppose that either $p$ or $q = \infty$. Then, consider any constant function $f(x) = a$ for $a \in \R$, it follows that $f \in \cL^\infty(\R)$, but $f \notin \cL^p(\R)$. Now, let \[
+    g_p(x) = \begin{cases}
+        \frac{1}{x^{2/p}} &\text{if}\,x > 0, \\
+        0 &\text{o/w}.
+    \end{cases}
+    \]
+    Then, clearly $g_p \in \cL^p(\R)$ but since $g_p$ is unbounded on sets of nonzero measure, $g_p \notin \cL^\infty(\R)$. These examples imply that $\cL^p(\R) \not\subset \cL^\infty(\R)$ and $\cL^p(\R) \not\supset \cL^\infty(\R)$.
+
+    Now, consider the case where $0 < p < q < \infty$. Choose $\alpha \in \R$ such that $\frac{1}{q} = \alpha < \frac{1}{p}$. Then, for $f(x) = \frac{1}{x^\alpha}$, $f \in \cL^q(\R)$ but $f\notin \cL^p(\R)$. 
+    \item[16.]
+    \item[17.]
+    \item[18.] By the previous problem, there exists Borel-measurable subsets $A_1, \ldots, A_n$ of $\R$ and nonzero numbers $a_1,\ldots,a_n$ such that $|A_k| < \infty$ for all $k\in \{1,\ldots,n\}$ and \[
+    \norm{f - \sum_{k=1}^n a_k \bigchi_{A_k}}_p  < \eps. 
+    \]
+    \item[19.] 
+\end{enumerate}
+\end{document}

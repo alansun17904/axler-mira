@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 2C: Measures and Their Properties}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[5.] 
+    \item[10.] Let $X = \R$, $\cS$ be the Borel sets, and let $\mu$ 
+    be the Lebesgue measure. Let $E_k$ be the following set:
+    \[
+        E_k = \bigcup_{x \in \Q} \left(x-\frac{1}{k}, x + \frac{1}{k}\right).
+    \]
+    Then, it follows that for any $E_k, \mu(E_k) = \infty$. Since $\bigcap_{k=1}^\infty E_k = \Q$, 
+    $\mu\left(\bigcap_{k=1}^\infty E_k\right) = 0$. However, $\lim_{k\to\infty} \mu(E_k) = \infty$. 
+    Thus, the hypothesis that $\mu(E_1) < \infty$ is necessary.
+\end{enumerate}
+\end{document}

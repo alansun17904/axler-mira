@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 6C: Normed Vector Spaces}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+\usepackage{dsfont}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[7.] Consider the following sequence in $\ell_1$:
+    \begin{gather*}
+        \left(1,0,0,\ldots\right), \\
+        \left(1,\frac{1}{2},0,\ldots\right), \\
+        \left(1,\frac{1}{2},\frac{1}{3},0,\ldots\right).
+    \end{gather*}
+    The sequence is a clearly a Cauchy sequence under the $\sup_{k\in\Z^+}|a_k|$ norm, but it converges to the harmonic series which is not in $\ell_1$. Thus, $\ell_1$ with this norm is not a Banach space.
+    \item[8.] Consider a Cauchy sequence, $p_1,p_2,\ldots$, in $\ell_1$, under the summation norm. Suppose that this sequence converges to some $p$. By the definition of convergence, for every $\eps > 0$, there exists $N$ such that for all $n > N$, \[
+    \sum_{k=1}^\infty |p^k_n - p^k| < \eps.
+    \]
+    It follows that 
+    \begin{align*}
+        \sum_{k=1}^\infty |p^k| &\leq \sum_{k=1}^\infty |p^k_n - p^k| + \sum_{k=1}^\infty |p^k_n|, \\
+        &< \eps + \sum_{k=1}^\infty |p^k_n|.
+    \end{align*}
+    This last expression is finite since $p_n \in \ell_1$. Thus, it follows that $\ell_1$ with the summation norm is complete which implies that it is a Banach space.
+    \item[9.] Consider the sequence of functions \[
+    f_k(x) = \frac{1}{1+e^{-k(x-1)}}.
+    \]
+    Each of these functions is continuous and is a Cauchy sequence under the norm $\int_0^1|f|$. However, the sequence of functions converge to 
+    \[
+        f(x) = \begin{cases}1 &\text{if}\,x\geq 0.5 \\ 0 &\text{o/w}.\end{cases}
+    \]
+    which is not in $C([0,1])$.
+    \item[12.] Since $W$ is a subspace, $0 \in W$. And for any $w \in W, w \in \overline{W}$. Now, suppose that $a, b \in \overline{W}$. We show that $a + b \in \overline{W}$. By assumption, for every $\eps > 0$, there exists $a' \in B(a,\eps/2) \cap W$ and $b' \in B(b,\eps/2) \cap W$. Since $W$ is a subspace, it must be that $a' + b' \in W$. Now,
+    \begin{align*}
+        \lVert (a + b) - (a' + b') \rVert &= \lVert (a - a') + (b - b') \rVert, \\
+        &\leq \lVert a - a'\rVert + \lVert b - b' \rVert, \\
+        &< \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+    \end{align*}
+    Thus, $a' + b' \in B(a + b, \eps) \cap W$. So, $\overline{W}$ is closed under addition. 
+
+    For $\alpha \in \F, w \in W$, $\eps > 0$, let $w' \in B(w, \eps/|\alpha|) \cap W$. Then, it follows that $\frac{w'}{\alpha} \in W$ since $W$ is a subspace. Moreover,
+    \begin{align*}
+        \lVert \alpha w - w' \rVert &= \left\lVert \alpha\left(w - \frac{w'}{\alpha}\right)\right\rVert, \\
+        &= |\alpha|\left\lVert w - \frac{w'}{\alpha}\right\rVert < |\alpha|\cdot \frac{\eps}{|\alpha|} = \eps.
+    \end{align*}
+
+    
+    \item[16.] \begin{enumerate}
+        \item For $\eps > 0$, there exists $\alpha \in \F, \alpha \neq 0$ such that $|| \alpha f || = 1$ when $|| f || < 1$. This also implies that $|\alpha| > 1$. Thus, 
+        \begin{align*}
+            \lVert T(\alpha f) \rVert &= \lVert \alpha \cdot Tf \rVert = |\alpha|\cdot \lVert Tf \rVert > \lVert  Tf \rVert.
+        \end{align*}
+        This implies that 
+        \[
+        \sup\{|| Tf || : f\in V, ||f || < 1\} \leq \sup \{ || Tf || : f \in V ||f || \leq 1\}.
+        \]
+        It remains to show the inequality in the other direction. By way of contradiction, suppose that there exists $f \in V, ||f || = 1$ and $\eps > 0$ such that for all $g \in V$ where $||g|| < 1$ and $||Tg || + \eps < ||Tf||$. 
+
+        Consider first the case where $||Tf||$ is infinite. Since $||g || < 1$, there must exist some $g' \in V$ where $||g' || < 1$ such that $|| g + g' || = 1$. Then, by assumption,
+        \[
+        \infty = || T (g + g') || \leq || T g || + || T g' ||.
+        \]
+        This implies that either $|| Tg ||$ or $|| T g'||$ is infinite which is a contradiction. Now, consider the case where $|| Tf || < \infty$. This implies that $T$ is a bounded linear map which means that $T$ is continuous. Thus, for any $\eps > 0$, there exists $\delta > 0$ such that for all $|| f -g || < \delta$, $|| Tf - Tg || < \eps$. This contradicts the assumption and proves the inequality in the other direction.
+
+        \item 
+
+        
+    \end{enumerate}
+    \item[18.] That (a $\Rightarrow$ b) follows immediately from the fact that every bounded linear map is continuous.
+\end{enumerate}
+\end{document}

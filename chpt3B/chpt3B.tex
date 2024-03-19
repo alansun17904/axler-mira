@@ -1,0 +1,167 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 3B: Limits of Integrals and Integrals of Limits}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[3.] Since $f \in \cL^1(\R)$, for any $\eps > 0$, there exists $\delta > 0$ such that 
+    \[
+        \int_B |f| < \eps,
+    \]
+    for any $B$ such that $\mu(B) < \delta$. Thus, for given $\eps > 0$, choose $\delta > 0$ such that 
+    \[
+        \int_B |f| < \frac{\eps}{2}.
+    \]
+    Then, it follows that for any $x, x' \in X$ if $|x - x'| < \delta$, then (assuming without the loss of generality that $x > x'$)
+    \begin{align*}
+        |g(x) - g(x')| &= \left|\int_{(-\infty, x)} f\dd\mu - \int_{(-\infty, x')} f \dd\mu\right|, \\
+        &= \left|\int_{(x',x)} f \dd\mu \right|,
+        \intertext{note that by construction $\mu((x',x')) < \delta$. So,}
+        &= \left|\int_{(x',x)} f^+ \dd\mu - \int_{(x',x)} f^- \dd\mu \right|, \\
+        &\leq \int_{(x',x)} f^+ \dd\mu + \int_{(x',x)} f^- \dd\mu, \\
+        &< \eps.
+    \end{align*}
+    The last inequality follows from the fact that $|f| \geq f^+, f^-$.
+    \item[4.] \begin{enumerate}
+        \item Consider any $\cS$-partition $A_1, \ldots, A_m$, then 
+        \[
+            \sum_{i=1}^m \mu(A_i) \sup_{A_i} f \geq \sum_{i=1}^m \mu(A_i) \inf_{A_i} f.    
+        \]
+        Thus, 
+        \[
+            \int f \dd\mu \leq \inf\left\{\sum_{i=1}^m \mu(A_i)\sup_{A_i}f : \text{for any}\,\cS\text{-partition}\,A_1,\ldots,A_n\right\}.
+        \]
+        Now, it remains to show the inequality in the other direction. See the following claim,
+        \begin{claim}\label{claim:1}
+            For any $\eps > 0$, there exists a $\cS$-partition $A_1, \ldots, A_n$ such that 
+            \[
+                \cL(f; A_1, \ldots, A_n) + \eps \geq \cU(f; A_1,\ldots, A_n), 
+            \]
+            where $\cL(\cdot;\cdot)$ denotes the lower Lebesgue sum and $\cU(\cdot;\cdot)$ denotes
+            the upper Lebesgue sum.
+        \end{claim}
+        \begin{poc}
+            Since $f$ is $\cS$-measurable and bounded, there exists a sequence of monotontically increasing
+            functions $f_1, f_2,\ldots$ that converge uniformly to $f$. Thus, there exists $N\in\Z^+$ such that
+            for any $n > N$, 
+            \[
+                f(x) - f_n(x) < \frac{\eps}{2\mu(X)},    
+            \]
+            for all $x \in X$. Since $f_n$ is simple, it follows that 
+            \[
+                f_n = \sum_{i=1}^m c_i \bigchi_{A_i},    
+            \]
+            where $A_1, \ldots, A_n$ is an $\cS$-partition of $X$. It also follows that 
+            \[
+                \int f - f_n \dd\mu < \frac{\eps}{2\mu} \cdot \mu(X) < \frac{\eps}{2}.  
+            \]
+            Since $\bigchi_{A_i} f \geq \bigchi_{A_i} \inf f \geq \bigchi_{A_i} f_n$, for any $A_i$, it must
+            be that $\cL(f;A_1,\ldots,A_n)-\int f_n \dd\mu < \frac{\eps}{2}$. Now, we want to show that the 
+            upper Lebesgue sum is also ``close'' to the simple approximation. By uniform convergence,
+            $\sup f - f_n \leq \eps$ and since $f_n$ is constant on any $A_i$, it follows that 
+            \[
+                \sum_{i=1}^m \sup_{A_i} f \cdot \mu(A_i) - \sum_{i=1}^m c_i \bigchi_{A_i} \leq \frac{\eps}{2\mu(X)}\cdot \mu(X) = \frac{\eps}{2}.
+            \]
+            Thus, it follows by triangle inequality that 
+            \begin{equation*}
+                \cU(f;A_1,\ldots,A_m) - \cL(f; A_1,\ldots, A_m) \leq \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+            \end{equation*}
+        \end{poc}
+        Using the claim, it follows that for any $\eps > 0$, 
+        \begin{align*}
+            \sup_{\{A_i\}_{i=1}^n} \cL(f; A_1,\ldots,A_n) + \eps &\geq \cU(f; A_1,\ldots,A_n), \\ 
+            &\geq \inf_{\{A_i\}_{i=1}^n} \cU(f;A_1,\ldots,A_n).
+        \end{align*}
+        Since the last inequality holds for arbitrary $\eps > 0$, it follows that $\int f \dd\mu = \inf_{\{A_i\}_{i=1}^n} \cU(f;A_1,\ldots,A_n)$.
+        \item Consider the function $f = \frac{1}{\sqrt{x}}$, over the measure space $((0,1), \cB((0,1)), \lambda)$. Then,
+        it follows that $\int f \dd\mu = 2$ (by the dominated convergence theorem and problem 5). However, for any partition $A_1, \ldots, A_n$,
+        there exists $A_i$ such that $\mu(A_i) > 0$ and $\sup A_i = \infty$. Thus, the lower and upper Lebesgue sums do not coincide. 
+        \item Let $f(x) = \frac{1}{x^2}$ and consider the measure space $((0,1), \cB(0,1), \lambda)$. Then, it follows that 
+        for any partition $A_1,\ldots,A_n$ there exists a $A_i$ such that $\mu(A_i) > \infty$. Thus, $\inf \cU(f;A_1,\ldots,A_n) = \infty$. 
+    \end{enumerate}
+    \item[5.] It is given that $f \in \cL^1(\R)$ and by definition, 
+    \[
+        \lim_{k \to \infty} \int_{[-k,k]} f\dd\lambda = \lim_{k\to\infty}\int \bigchi_{[-k,k]} f \dd\lambda.    
+    \]
+    Since $f \in \cL^1(\R)$ and for any $k \in \R$, $\bigchi_{[-k, k]} f \leq f$ the hypotheses for the dominated convergence theorem holds.
+    Thus, because $\lim_{k\to\infty} \bigchi_{[-k,k]} f = f$,
+    \[
+        \lim_{k \to \infty} \int_{[-k,k]} f\dd\lambda = \int f\dd\lambda.
+    \]
+    \item[7.] Note that we need to violate the hypotheses of the dominated convergence theorem. That is, we need to find a function $f$ such that 
+    there does not exists a function $g \in \cL^1(\R)$ such that $|f_k| \leq g$ for all $k\in\Z^+$. 
+    Consider the function
+    \[
+        f(x) = -\frac{1}{x} - \frac{1}{x-1},    
+    \]
+    its domain restricted to the interval $(0,1)$. Then, for any $n \in \R$, $\int_{(\frac{1}{n},1)} f \dd\lambda = \infty$. Thus,
+    \[
+        \lim_{n\to\infty} \int_{(\frac{1}{n},1)} f \dd\lambda = \infty.
+    \]
+    But, $\int_{(0,1)} f \dd\mu$ does not exist.
+    \item[8.] First, assume that $f$ is not continuous at $x$. Then, there exists $\eps > 0$, for any interval $I_x$ which contains $x$, 
+    there exists $y \in I_x$ such that $|f(x) - f(y)| \geq \eps$. Therefore, it follows that $\sup_{I_x} f \neq \inf_{I_x} f$. 
+    Consider a sequence of closed intervals $I_1, \ldots, I_{2^n}$ which cover $[a,b]$. If there exists 
+    $I_i$ which contains $I_x$, then naturally $g_n(x) \neq h_n(x)$. On the other hand, if $x$ lies on the boundary of some interval $I_i$,
+    then by definition $g_n$ and $h_n$ take on the infinimum and supremum of $f$ on the union of the two intervals that contain that point. 
+    So, $x$ must lie on the interior of this union. Then, there exists an open interval around $x$ contained in the union of these two closed intervals.
+    As a result, $g_n(x) \neq h_n(x)$. Since $h_n(x) - g_n(x) \geq \eps$ for any $n \in \Z^+$, $f^U(x) \neq f^L(x)$ and the 
+    proof in this direction is completed.
+
+    Now, assume that $f^U(x) \neq f^L(x)$. This implies that there exists some $\eps > 0$ and $N\in\Z^+$ such that for any $n > N$,
+    $h_n(x) - g_n(x) > \eps$. By the definition of $h_n,g_n$ (see above), it follows for any $n$ there exists
+    some open interval, $I$, of length $(b-a)/2^n$ containing $x$ such that $\sup_I f - \inf_I f > \eps$. Thus, there must exist some $y\in I$
+    such that $|f(x) - f(y)| \geq \eps$. Therefore, $f$ is not continuous at $x$. 
+    \item[9.] Let $f = \sum_{i=1}^n a_i \bigchi_{A_i}$. Then, 
+    \begin{align*}
+        \int |f| \dd\mu &= \int f^+ \dd\mu + \int f^- \dd\mu, \\
+        &= \sum_{\{i:a_i \geq 0 \}} a_i\mu(A_i) + \sum_{\{i:a_i < 0\}} -a_i \mu(A_i), \\
+        &= \sum_{i=1}^n |a_i|\mu(A_i).
+    \end{align*}
+    Let us first show the ``if''-direction. Suppose that $E_k \in \cS$ and $\mu(E_k) < \infty$ for all $k\in \{1,\ldots,n\}$. Then,
+    clearly, $f$ is $\cS$-measurable. And it also follows thta $\int |f| \dd\mu < \infty$ (from the expression we derived above).
+    Thus, by the definition of $\cL^1$, $f \in \cL^1(\mu)$. 
+    Now, consider the ``only-if''-direction. If $f \in \cL^1$, then $f$ must be $\cS$-measurable. If $E_k \notin \cS$, then 
+    $f^{-1}(\{a_k\}) \notin \cS$ (by disjointness). So, it must be that each $E_k \in \cS$. Also, $\int |f| \dd\mu < \infty$ 
+    implies that $\sum_{i=1}^n |a_i|\mu(A_i) < \infty$. Since each $a_i \in (-\infty,\infty)$, it must be that $\mu(E_k)$ for 
+    every $k\in \{1,\ldots,n\}$. 
+\end{enumerate}
+\end{document}

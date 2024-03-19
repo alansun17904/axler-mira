@@ -1,0 +1,241 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 2B: Measurable Spaces and Functions}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newtheorem{remark}{Remark}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[5.] First note that for any $x\in \R$, there can only be infinitely many digits after the decimal point. 
+    So, it suffices to only consider the decimal digits after the decimal point that are 5. Thus, define 
+    \begin{equation*}
+        f_k = \begin{cases}1 &\text{if the}\,k^{\text{th}}\,\text{decimal digit of}\, x=5, \\ 0&\text{o/w.}\end{cases}
+    \end{equation*}
+    \begin{claim}
+        $f_k$ is measurable.
+    \end{claim}
+    \begin{poc}
+       It suffices to show that $f_k^{-1}(\{0\})$ is an open set. Suppose that $x \in f_k^{-1}(\{0\})$. Then, it follows that the $k^{\text{th}}$ decimal digit of $x$ is not 5. So, there exists some $\eps > 0$ such that $(x-\eps, x+\eps) \subset f_k^{-1}(\{0\})$.
+       Then, consider the $k$ decimal digit of $x$ which I denote by $x_k$. If $x_k \neq 4$ and $x_k \neq 6$. Then, 
+       $(x - \frac{1}{10^k}, x+\frac{1}{10^k}) \in f_k^{-1}(\{0\})$. Otherwise, if $x_k = 4$ or $x_k = 6$, then it must be that  
+       $(x - \frac{1}{10^{k+1}}, x + \frac{1}{10^{k+1}}) \in f_k^{-1}(\{0\})$. Thus, it follows that 
+       $f_k^{-1}(\{0\})$ is a Borel set, so $f$ must be measurable. 
+    \end{poc}
+    Let $g_k = \sum_{i=1}^k f_i$. Then, $g_k$ is also measurable, since it is a sum of measurable functions. Now, it follows
+    that $h(x) = \sup\{g_k(x): k\in\Z^+\}$ must also be measurable. Thus, $h^{-1}(\{\infty\})$ is exactly the set 
+    where there is an infinite number of decimal points and this set by definition must also be a Borel set.
+    \item[14.] \begin{enumerate}[label=(\alph*)]
+        \item If 
+        \[
+            x \in \bigcap_{n=1}^\infty \bigcup_{j=1}^\infty \bigcap_{k=j}^\infty (f_j - f_k)^{-1}((-1/n, 1/n)),
+        \]
+        then it follows that for all $n \geq 1$, there exists $j \geq 1$ such
+        that for all $k \geq j$, it must be that $|f_j(x) - f_k(x)| < 1/n$. This
+        implies that for any $n,m > j$, it must be that $|f_n(x) - f_m(x)| \leq
+        |f_n(x) - f_j(x)| + |f_j(x) - f_m(x)| < 2/n$. Thus, $f_1(x), f_2(x),
+        \ldots$ is a Cauchy sequence, so it follows that $f_1(x), f_2(x),
+        \ldots$ converges in $\R$.
+    
+        \item We use the equivalence in part (a). Recall that a function is
+        $\cS$-measurable if and only if for every Borel set, $\cB$, $f^{-1}(\cB)
+        \in \cS$. Since $(-1/n,1/n)$ is an open set, then by definition it is a
+        Borel set. Thus, since each $f_j$ is $\cS$-measurable, it follows that
+        $f_j - f_k$ is also $\cS$-measurable. So, $(f_j - f_k)^{-1}((-1/n, 1/n))
+        \in \cS$. Because $\cS$ is a $\sigma$-algebra, it must be closed under
+        countable unions and intersections. Therefore, the set must be
+        $\cS$-measurable.
+    \end{enumerate}
+    \item[15.] \begin{enumerate}[label=(\alph*)]
+        \item It must be that $X \in \cS$ (this is trivial). 
+        \begin{claim}
+            $\cS$ is closed under complements.
+        \end{claim}
+        \begin{poc}
+            Suppose that $A \in \cS$. Then, it follows that there exists some
+            $\cK \subset \Z^+$ such that $A = \bigcup_{k \in \cK} E_k$. Then, it
+            follows that 
+            \begin{align*}
+                (X \setminus A) &= X \setminus \bigcup_{k \in \cK} E_k, \\
+                &= \bigcap_{k \in \cK} (X \setminus E_k), \\ 
+                &= \bigcap_{k\in \cK} \bigcup_{j \in \Z^+ \setminus \{k\}} E_j, \\ \tag{since $E_1,E_2,\ldots$ are disjoint} \\
+                &= \bigcup_{k\in \Z^+ \setminus \cK} E_k.
+            \end{align*}
+            Thus, since $\Z^+ \setminus \cK \subset \Z^+$, then it follows that
+            $X \setminus A \in \cS$.
+        \end{poc}
+        \begin{claim}
+            $\cS$ is closed under countable unions. 
+        \end{claim}
+        \begin{poc}
+            Suppose a sequence of sets $A_1, A_2,\ldots$ such that any $A_k \in
+            \cS$. Then, by the definition of $\cS$, it follows that $A_k =
+            \bigcup_{n \in N_k} E_n$. So,
+            \begin{align*}
+                \bigcup_{k=1}^\infty A_k &= \bigcup_{k=1}^\infty \bigcup_{n \in N_k} E_n, \\
+                &= \bigcup_{n \in N} E_n,
+            \end{align*}
+            for $N = \bigcup_{k=1}^\infty N_k$. And since $N \subset \Z^+$, as
+            each $N_k \subset \Z^+$. Thus, $\cS$ is closed under countable
+            unions.
+        \end{poc}
+        \item \begin{claim} If $f$ is constant on every $E_k$, then $f$ is an
+            $\cS$-measurable function.
+        \end{claim}
+        \begin{poc}
+            Formally, if $f$ is constant on every $E_k$, then 
+            \[f(x) = \sum_{k=1}^\infty c_k \bigchi_{E_k},\] for $c_k \in \R$.
+            Thus, for any Borel set $\cB$, 
+            \[
+                f^{-1}(\cB) = \bigcup \left\{ E_k : f(x) = c_k, c_k \in \left(\cB \cap \{c_1, c_2, \ldots \}\right)\right\}    
+            \]
+            So, it follows by the definition of $\cS$ that $f^{-1}(\cB) \in
+            \cS$. Thus, $f$ is $\cS$-measurable.
+        \end{poc}
+        \begin{claim}
+            If $f$ is $\cS$-measurable, then $f$ is constant on every $E_k$.
+        \end{claim}
+        \begin{poc}
+            By way of contradiction, assume that $f$ is not constant on every
+            $E_k$. That is, there exists some $k\in \Z^+$ such that there exists
+            some $x, y \in E_k$ where $f(x) \neq f(y)$. Then, consider the Borel
+            set $\{f(y)\}$. By assumption, $x \notin f^{-1}(\{f(y)\})$, but $y
+            \in f^{-1}(\{f(y)\})$. It remains to show that there does not exist
+            a set $A \in \cS$ such that $x \notin A$ and $y \in A$. Since $A =
+            \bigcup_{k \in \cK} E_k$ this implies that for all $k \in \cK$, $x
+            \notin E_k$, but there exists a set such that $y \in E_k$. This is a
+            contradiction, since by assumption $x,y \in E_j$ for some $E_j$, but
+            all $E_1, E_2, \ldots$ are disjoint. Thus, if $y\in E_k$ then $x \in
+            E_k$. So, it must be that $f$ is constant on every $E_k$. 
+        \end{poc}
+    \end{enumerate}
+    \item[21.] We want to show that $\cT = \{A \subset \R: f^{-1}(A) \subset
+    \cS\}$ is a $\sigma$-algebra. Since for any open interval
+    \begin{equation*}
+        (a,b) = (a, \infty] \cap \left(\bigcup_{n=1}^\infty [-\infty,b-\frac{1}{n}]\right).
+    \end{equation*}
+    Since any open set is the countable union of disjoint open intervals, by the
+    construction above $\cT$ contains all open sets. Thus, since $\cT$ is a
+    $\sigma$-algebra, it must also contain all Borel subsets. It remains to show
+    that $\cT$ is a $\sigma$-algebra. Firstly, $\emptyset \in \cT$ since
+    $f^{-1}(\emptyset) = \emptyset$. 
+    \begin{claim}
+        $\cT$ is closed under complements.
+    \end{claim}
+    \begin{poc}
+        If $A \in \cT$. Then, $f^{-1}(A) \in \cS$. So, $f^{-1}(\R \setminus A) =
+        X \setminus f^{-1}(A)$ which is in $\cS$ since $\cS$ is a
+        $\sigma$-algebra. Thus, $\R \setminus A \in \cT$.
+    \end{poc}
+    \begin{claim}
+        $\cT$ is closed under countable unions.
+    \end{claim}
+    \begin{poc}
+        Suppose a sequence of sets $A_1, A_2, \ldots$ such that $A_k \in \cT$.
+        Then, it follows that 
+        \begin{equation*}
+            f^{-1}\left(\bigcup_{k=1}^\infty A_k\right) = \bigcup_{k=1}^\infty f^{-1}(A_k).
+        \end{equation*}
+        This last expression is in $\cS$ since each $f^{-1}(A_k) \in \cS$ and
+        $\cS$ is closed under countable unions. So, $\cT$ is also closed under
+        countable unions.
+    \end{poc}
+    \item[25.] We want to construct a sequence of functions such that for any
+    $f_k$, if $x < y$, then $f_k(x) < f_k(y)$. Let $f_k(x) = f(x) +
+    \frac{x}{k}$. Since by assumption $f(x)$ is an increasing function, for any
+    $x < y$, it must be that $f(x) \leq f(y)$. Moreover, $\frac{x}{k} <
+    \frac{y}{k}$ since $k > 0$. Thus, for any $x < y$, it must be that $f_k(x) <
+    f_k(y)$. Furthermore, 
+    \begin{equation*}
+        \lim_{k \to \infty} f_k(x) = \lim_{k \to \infty} f(x) + \frac{x}{k} = f(x) + \lim_{k\to\infty} \frac{x}{k} = f(x).
+    \end{equation*}
+    \item[27.] \textit{Remark.} As mentioned in the text, for a measure space
+        $(X,\cS$, if $\cS$ is the set of all subsets of $X$, then every function
+        is $\cS$-measurable. However, if $\cS$ does not contain all subsets of
+        $X$, say there exists $E\subset X$ such that $E \notin \cS$, then the
+        function $\bigchi_E(x)$ is not $\cS$-measurable. 
+
+        Thus, the set of measurable functions depends only on $\cS$. Also, note
+        that in the proof of Theorem 2.39, since $f^{-1}$ has
+        ``$\sigma$-algebra'' properties, the sets $(a,\infty)$ for all $a\in \R$
+        can be replaced by any collection of sets as long as they can be used to
+        generate all open intervals in $\R$. 
+
+        Since the set of all open interval in $[-\infty, \infty]$ is the same as
+        the set of all open intervals in $\R$, it follows from the proof of
+        Theorem 2.39, that all open intervals can be constructued from
+        $(a,\infty)$. As a result, $f$ must also be measurable. 
+    \item[30.] First consider the inside iterated limit as $k\to \infty$. We
+    first show that if $-1 < \cos(j!\pi x) < 1$, then the inner limit goes to 0.
+    See the following claim.
+    \begin{claim}
+        If $x \in [0,1]$, then 
+        \[
+            \lim_{a \to \infty} x^a = \begin{cases}1 &\text{if}\,x =1, \\ 0 &\text{otherwise.}\end{cases}
+        \]
+    \end{claim}
+    \begin{poc}
+        If $x=1$, then $x^a = 1$ for all $a \in \R$. So, $\lim_{a \to \infty}
+        x^a = 1$. On the other hand, consider the case where $x \in [0,1)$. Let
+        $a = \tilde a + b$ such that $\tilde a \in \Z$ and $0 \leq b < 1$. Then,
+        it follows that $x^a = x^{\tilde a + b} = x^b \cdot x^{\tilde a }$.
+        Since $x \in [0,1)$, $x \leq  x^b \leq 1$. Thus, it follows that $x^a
+        \leq x^{\tilde a}$, where $\tilde a \in \Z^+$. Since $\lim_{a \to
+        \infty} x^{\tilde a} = 0$ and $0 \leq x^a$ for all $a \in \R$, it must
+        be that $\lim_{a\to\infty} x^a = 0$. 
+    \end{poc}
+    Thus, it follows that 
+    \[
+        \lim_{k\to\infty} \cos(j!\pi x)^{2k} = \begin{cases}1 &\text{if}\, \cos(j!\pi x)^{2} = 1, \\ 0 &\text{otherwise.}\end{cases}
+    \]
+    So, it suffices to show that $\cos(j!\pi x)^2 = 1$ only if $x \in \Q$, as
+    $j\to \infty$. If $x\in \Q$, then by definition, there exists some $a,b\in
+    \Z$ such that $x = \frac{a}{b}$. Thus, by the definition of the limit, for
+    every integer sequence which converges to $\infty$, $j_1,j_2,\ldots$, there
+    must exist some $N$ such that for all $n > N, j_n > |b|$. For all such
+    $j_n$, it must be that 
+    \[\cos\left(j_n!\pi \frac{a}{b}\right) = \cos(\underbrace{j_n(j_n-1)\cdot
+    \ldots \cdot(|b|+1)(|b|-1)}_{\text{(a)}}\ldots \cdot \pi a).\] Since (a) is
+    an integer and $a \in \Z$, it must be that the cosine term is in $\{-1,1\}$.
+    Thus, the limit converges to 1. On the other hand, if $x \in \R \setminus
+    \Q$, then for every integer sequence $j_1,j_2,\ldots$, there does not exist
+    some $j_n$ such that $j_n! x$ is an integer, otherwise, $x$ would be
+    rational. 
+\end{enumerate}
+\end{document}

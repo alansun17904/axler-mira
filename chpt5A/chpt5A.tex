@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 5A: Products of Measure Spaces}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+\usepackage{dsfont}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[3.] Consider any non-Borel set $V$. For any $A \subset \R$, define $\mathrm{diag}(A) \coloneqq \{(x,x): x \in A\}$. It follows that the cross-sections of any $\mathrm{diag}(V)$ is a singleton, so it must be a Borel set. Now, we show that $\mathrm{diag}(V) \notin \cB \otimes \cB$. Clearly $\mathrm{diag}(\cdot)$ is a measurable function since for any measurable rectangle $R \in \cB\otimes \cB$, $\mathrm{diag}^{-1}(R) \in \cB$. Thus, it follows that if the image is in $\cB \otimes \cB$, then its pre-image must be a Borel set. Therefore $\mathrm{diag}(V)\notin \cB\otimes \cB$.
+   % \item[3.] Consider any non-measurable set $V$. It follows by definition that $V$ cannot be constructed from any countable union, intersection, or complements of Borel sets. Now, let 
+   % \[
+   %      E = \{(v,x): \forall v \in V, \text{choose a unique number}\,x\in\R\}.
+   % \]
+   % It follows that for any $a \in \R$, $[E]_a = \{y\in \cY: (a,y) \in E\}$ is either the empty set or a singleton. This is because by construction, every $a \in V$ is assigned a unique number. So,  $[E]_a$ is a Borel set. Now, consider $[E]^a = \{x \in X: (x,a) \in E\}$. For every $a\in \R$, this is also either the empty set or a singleton by the construction of the one-to-one function before. It remains to show that $E \notin \cB \otimes \cB$.
+   %  \begin{claim}
+   %     For every set in $A \in \cB \otimes \cB$, it follows that there exists $\tilde{A} \in \cB$ such that
+   %     \[
+   %          A = (\R \times \tilde{A}) \cup (A \setminus (\R \times \tilde{A})).
+   %     \]
+   % \end{claim}
+   % \begin{poc}
+   %     Consider the set $A' = \{A \in \cB \otimes \cB: \tilde{A}\,\text{exists}\}$. $A' \subset \cB\otimes \cB$, it remains to show that $A'$ is a $\sigma$-algebra. It's obvious that $\emptyset \in A'$. Suppose that $A_1, A_2, \ldots$ in $A'$. Then, 
+   %     \begin{align*}
+   %         \bigcup_{k=1}^\infty A_k &= \bigcup_{k=1}^\infty (\R \times \tilde{A}_k) \cup (A \setminus (\R \times \tilde{A}_k)), \\
+   %         &= \bigcup_{k=1}^\infty (\R \times \tilde{A}_k) \cup \bigcup_{k=1}^\infty (A \setminus (\R \times \tilde{A}_k)), \\
+   %         &= \R \times \left(\bigcup_{k=1}^\infty \tilde{A}_k\right) \cup A \setminus \left(\R \times \left(\bigcup_{k=1}^\infty \tilde{A}\right)\right),
+   %     \end{align*}
+   %     since $\tilde{A}_k$ is a Borel set, the countable union of $\tilde{A}_k$ is also a Borel set. Thus, $A'$ is closed under countable intersections. Now, it remains to show that $A'$ is closed under complements. Suppose that $A \in A'$. Then,
+   %     \begin{align*}
+   %         (\R \times \R) \setminus A &= (\R \times \R) \setminus \left((\R \times \tilde{A}) \cup (A\setminus (R \times \tilde{A}))\right), \\
+   %         &= (\R^2 \setminus (\R \times \tilde{A})) \cup (\R^2 \setminus (A \setminus (R\times \tilde{A}))), \\
+   %         &= (\R \times (\R \setminus \tilde{A})) \cup  
+   %     \end{align*}
+   % \end{poc}
+   
+   \item[4.] If $f,g$ were characteristic functions such that $f = \bigchi_{A}$ and $g = \bigchi_{B}$. Then, $f \cdot g$ is $\cS \otimes \cT$-measurable. This is because $(f \cdot g)^{-1}(\text{any set not including 1}) = (A \times (\cY \setminus B)) \cup ((X\setminus A) \times \cY) \cup ((X\setminus A)\times (\cY \times B))$, since this is a finite union of measurable rectangles then it must be contained in $\cS \otimes \cT$. It follows from this that if $f,g$ were simple measurable functions, then $(f\cdot g)$ is a measurable function since 
+   \begin{align*}
+        f\cdot g &= \left(\sum_{i=1}^n c_i\bigchi_{A_i}\right)\left(\sum_{i=1}^m d_i\bigchi_{B_i}\right), \\
+        &= \sum_{i=1}^n \sum_{j=1}^m (c_id_j)\bigchi_{A_i}\bigchi_{A_j}.
+   \end{align*}
+   Since the products of measurable functions is measurable, and the constant-multiple of measurable functions is also measurable, it must be that $f\cdot g$ is measurable. 
+
+   Next, for any arbitrary $f,g$ there exists a sequence of measurable functions $f_1,f_2,\ldots$ and $g_1,g_2,\ldots$ which converge point-wise to $f,g$. It follows that 
+   \begin{align*}
+       h &= \left(\lim_{n\to\infty} f_n\right)\left(\lim_{n\to\infty} g_n \right), \\
+       &= \lim_{n\to\infty} f_n \cdot g_n, \\
+       &= f \cdot g.
+   \end{align*}
+   It follows that since the point-wise limit of a measurable functions is measurable, $h$ is measurable.
+
+
+   
+   \item[5.] Let $\cA$ be the set of all finite unions of intervals in $\R$. Then, clearly $\cA$ is closed under finite unions. It remains to show that $\cA$ is closed under complementation.
+   \begin{claim}
+       If $I \subset \R$ is an interval. Then, $\R \setminus I$ is a finite union of intervals in $\R$. 
+   \end{claim}
+   \begin{poc}
+       Without the loss of generality suppose that $I = (a,b)$ where $a,b \in [-\infty,\infty]$. Then, it follows that $\R \setminus I = (-\infty,a] \cup [b,\infty)$ (the union of two intervals in $\R$).
+   \end{poc}
+   For any $A \in \cA$, by construction, 
+   \[
+        A = \bigcup_{k=1}^n I_k,
+   \]
+   for some $n\in\Z^+$ and $I_k$ an interval of $\R$. So,
+   \[
+        \R \setminus A = \R \setminus \bigcup_{k=1}^n I_k = \bigcap_{k=1}^n (\R \setminus I_k),
+   \]
+   Thus, by claim 1, $\R \setminus I_k$ is the finite union of intervals and the finite intersections of
+   intervals is also an interval.
+   
+   \item[8.] (a $\Rightarrow$ b) If the measure $\mu$ is $\sigma$-finite, then there exists a sequence of sets $E_1,E_2,\ldots$ such that $E_k \in \cS$, $X = \bigcup_{k=1}^\infty E_k$ and $\mu(E_k) < \infty$ for every $k\in\Z^+$. It then follows that $X_1 = E_1, X_2 = (E_1 \cup E_2), X_3 = (E_1 \cup E_2 \cup E_3), \ldots$ is a sequence of increasing sets in $\cS$. Moreover, $X = \bigcup_{k=1}^\infty X_k$ and it also follows that $\mu(X_k) \leq \sum_{i=1}^k \mu(E_i) < \infty$, for any $k\in\Z^+$. (b $\Rightarrow$ c) Suppose that we have an increasing sequence of sets $E_1, E_2, \ldots$ which satisfy the hypotheses above. Then, let $A_1 = E_1$, $A_2 = E_2 \setminus E_1$, $A_3 = E_3 \setminus (E_1 \cup E_2), \ldots$. It follows that each $A_k$ is disjoint and $\bigcup_{i=1}^\infty A_i = X$. For any $A_k$,
+   \[
+    0 \leq \mu(A_k) \leq \mu(E_k) - \sum_{i=1}^{k-1} \mu(E_i) < \infty.
+   \]
+   And that (c $\Rightarrow$ a) follows from the definition of $\sigma$-finite.
+   
+   \item[10.] Let $A = \{W \in \cS \otimes \cT: \omega(W) = (\mu\times \nu)(W)\}$. By the given, $A$ contains all measurable rectangles in $\cS \otimes \cT$. Now, consider any finite union of measurable rectangles: $A_1,\ldots,A_n$. There exists disjoint, measurable rectangles $W_1, \ldots, W_m$ such that \[
+   \bigcup_{k=1}^n A_k = \bigcup_{k=1}^m W_k.
+   \]
+   It then follows from the definition of a measure that 
+   \begin{align*}
+       \omega\left(\bigcup_{k=1}^n A_k\right) &= \omega\left(\bigcup_{k=1}^m W_k\right), \\
+       &= \sum_{k=1}^m \omega(W_k), \\
+       &= \sum_{k=1}^m (\mu\times\nu)(W_k), \\
+       &= (\mu\times\nu)\left(\bigcup_{k=1}^m W_k\right) \\ 
+       &= (\mu\times\nu)\left(\bigcup_{k=1}^n A_k\right).
+   \end{align*}
+   Thus, $A$ contains the algebra of all measurable rectangles. It remains to show that $A$ is a monotone class. Then, it follows that $A$ contains $\cS \otimes \cT$. First suppose that $(X,\cS,\mu),(Y,\cT,\nu)$ are both finite measure spaces. Now, consider a sequence of increasing sets in $A$: $A_1, A_2,\ldots$. It follows from the properties of a measure that 
+   \begin{align*}
+       \omega\left(\bigcup_{k=1}^\infty A_k\right) &= \lim_{k\to\infty} \omega(A_k), \\
+       &= \lim_{k\to\infty} (\mu \times \nu)(A_k), \tag{by def. of $A$} \\
+       &= (\mu\times\nu)\left(\bigcup_{k=1}^\infty A_k\right).
+   \end{align*}
+   So, the limiting set is contained in $A$. Now, consider a decreasing sequence of sets in $A$: $A_1,A_2,\ldots$, using the same line of logic above and the hypotheses that $(X\times Y, \cS\otimes\cT,\cdot)$ is a finite measure space, we yield that the limiting set in this case is also in $A$. Thus, we have shown in the finite measure case, that $A$ contains all of the sets in the tensor-product $\sigma$-algebra of $X\times Y$. Suppose now that $\cS\otimes \cT$ is only $\sigma$-finite. Then, it follows that there exists a sequence of sets $X_1, X_2, \ldots$ and $Y_1, Y_2, \ldots$ such that 
+   \begin{gather*}
+       \bigcup_{k=1}^\infty X_k = X \qquad \mu(X_k) < \infty, \\
+       \bigcup_{k=1}^\infty Y_k = Y \qquad \nu(Y_k) < \infty.
+   \end{gather*}
+   Redefine $X_k=\bigcup_{i=1}^k X_k$ and do the same thing with $Y_k$. Now the sequences of sets are increasing. It then follows that for any sequence of decreasing sets in $A$, $A_1, A_2,\ldots$, 
+   \begin{align*}
+       \omega\left(\bigcap_{k=1}^\infty A_k \right) &= \omega\left(\bigcup_{k=1}^\infty\bigcap_{\ell=1}^\infty A_\ell \cap (X_k \times Y_k)\right), \\
+       &= \lim_{k\to\infty} \omega\left(\bigcap_{\ell=1}^\infty A_\ell \cap (X_k\times Y_k)\right), \\
+       &= \lim_{k\to\infty}\lim_{\ell\to\infty} \omega(A_\ell \cap (X_k\times Y_k)), \\ \tag{since $A_\ell \cap (X_k\times Y_k)$ has finite measure} \\
+       &= \lim_{k\to\infty}\lim_{\ell\to\infty} (\mu\times\nu)(A_\ell \cap (X_k\times Y_k)), \\
+       &= \lim_{k\to\infty}(\mu\times\nu)\left(\bigcap_{\ell=1}^\infty A_\ell \cap (X_k\times Y_k)\right), \\
+       &= (\mu\times\nu)\left(\bigcup_{k=1}^\infty \bigcap_{\ell=1}^\infty A_\ell \cap (X_k \times Y_k)\right), \\
+       &= (\mu\times\nu)\left(\bigcap_{\ell=1}^\infty A_\ell\right).
+   \end{align*}
+\end{enumerate}
+\end{document}

@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 4A: Hardy-Littlewood Maximal Function}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+\usepackage{dsfont}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[1.] The proof for this is almost identical to the proof of Markov's
+    inequality:
+    \begin{align*}
+        \mu(\{x \in X: |h(x)| > c\}) &= \frac{1}{c^p} \int_{\{|h(x)| > c\}} c^p \dd\mu, \\
+        &\leq \frac{1}{c^p} \int_{\{|h(x)| > c\}} |h(x)|^p \dd\mu, \\
+        &\leq \frac{1}{c^p} \| h^p\|_1.
+    \end{align*}
+    \item[2.] We apply the previous problem, 
+    \begin{align*}
+        \mu\left(\left\{x \in X : \left|h(x) - \int h\dd\mu\right| \geq c\right\}\right) &\leq \frac{1}{c^2} \int \left(h - \int h \dd\mu \right)^2 \dd\mu, \\
+        &= \frac{1}{c^2}\int \left(h^2 - 2h\int h\dd\mu + \left(\int h\dd\mu\right)^2\right) \dd\mu, \\
+        &= \frac{1}{c^2} \left(\int h^2 \dd\mu - \left(\int h \dd\mu\right)^2\right).
+    \end{align*}
+    \item[4.] By way of contradiction, suppose that the constant in the Vitali
+    covering lemma can be replaced by $3\eps$ for $0 < \eps < 3$. Then, let $I =
+    (a,b)$ such that $b - \frac{3}{2}\eps b - \eps > 0$ and $a < b - \eps$. Now,
+    consider $I' = (b-\eps, b-\eps + \ell(I))$. Note that $I$ and $I'$ are not
+    disjoint. So, we proceed to show that the Vitali covering lemma no longer
+    holds with $3\eps$. It follows that 
+    \[
+        3\eps \ast (a,b) = \left(a - \frac{3\eps}{2}\ell(I), b + \frac{3\eps}{2}\ell(I)\right).    
+    \]
+    Then, 
+    \begin{align*}
+        b + \frac{3\eps}{2} \ell(I) &= b\left(1 + \frac{3}{2}\eps\right) - a, \\
+        \intertext{Since $b - \frac{3}{2}\eps b - \eps > 0$, it follows that $2 - \frac{\eps}{b} > 1 - \frac{3}{2}\eps$. Then,}
+        &< b\left(2 - \frac{\eps}{b}\right) - a.
+    \end{align*}
+    The last inequality implies that $3\eps \ast(a,b) \not \supset I'$. By
+    symmetry, $3\eps \ast I' \not \supset I$. 
+    \item[6.] For any $x \in (0,1)$, there exists an open interval, $I$, such
+    that $\bigchi_{[0,1]}(I) = 1$. Thus, $h^\ast((0,1)) = 1$. On the other hand,
+    if $x \leq 0$, then $\int_{b-t}^{b+t} |h| > 0$ only if $b+t > 0$. It also
+    follows that if $b+t > 1$, then $\int_{b-t}^{b+t} |h|$ decreases
+    monotonically. Thus, $h^*(b) = \frac{1}{2(1-b)}$ for $b < 0$. The same holds
+    if $b > 1$. So, applying the same logic, $h^*(b) = \frac{1}{2b}$ for $b >
+    1$. 
+    \item[9.] Let $A = \{b \in \R: h^\ast(b) > c\}$. Then, it suffices to show
+    that for every $b \in A$, there exists some $\eps > 0$ such that $(b-\eps,
+    b+\eps) \subset A$. We first consider the case of extending $[b,b]$ to the interval $[b,b+\eps)$ and show that 
+    there exists an $\eps > 0$ such that $[b,b+\eps) \subset A$, then by symmetry, $(b-\eps,b+\eps) \subset A$. So, 
+    \begin{align*}
+        \sup_{t > 0} \frac{1}{2t} \int_{b-t}^{b+t} |h| &= 
+        \sup_{t >0} \frac{1}{2t}\left(\int_{b-t}^{b+t} |h|- \int_{b-t}^{b+\eps-t} |h| + \int_{b+t}^{b+\eps + t} |h| \right), \\
+        &= \sup_{t > 0} \frac{1}{2t} \bigg(\int_{b-t}^{b+t} |h| - \eps \cdot \underbrace{\sup_{(b-t,b+\eps-t)} |h|}_{\text{(a)}} + \eps\cdot\sup_{(b+t,b+\eps+t)} |h|\bigg).
+    \end{align*}
+    It remains to show that there exists $\eps >0$ where $|h|$ is bounded on $(b-t,b+\eps+t)$. Then, the $\eps$-terms on the right-hand side
+    can be made arbitrarily small so, it follows that $[b,b+\eps) \subset A$. 
+    By way of contradiction, suppose for all $\eps > 0$, there does not exist some bounded Lebesgue measurable set $L$ such that 
+    $(b-t,b+\eps-t) \subset f^{-1}(L)$. Then, there does not exist a bounded Lebesgue measurable set $L$ such that 
+    $\cap_{\eps > 0} (b-t,b+\eps-t) \subset f^{-1}(L)$. This implies that $f(b-t) = \infty$ which is a contradiction since 
+    $f: \R \to \R$.  
+    \item[11.] 
+    \item[13.] 
+\end{enumerate}
+\end{document}

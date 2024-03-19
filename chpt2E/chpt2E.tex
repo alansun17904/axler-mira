@@ -1,0 +1,132 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 2E: Convergence of Measurable Functions}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[5.] Suppose that $X = \R$, then $\mu(X) \not< \infty$. It remains to
+    show that we can construct a function along with a sequence of functions
+    that does not converge uniformly on a large part of the domain. Consider
+    problem 30 from chapter 2B, where 
+    \[
+        f_n(x) = \cos(n\pi x)^{2n},    
+    \]
+    we've already show that this converges pointwise to the function,
+    \[
+        f(x) = \begin{cases} 1 &\text{if}\, x\in\Q, \\ 0&\text{o/w.}\end{cases}  
+    \]
+    However, the sequence does not converge uniformly on any irrational point.
+    Thus, there does not exist an arbitrarily large subset of $\R$ where the
+    sequence converges uniformly. 
+    \item[7.] The converse has already been proved in the text, so it remains to
+    show the forward direction. For every $\eps > 0$, it suffices to show that
+    there exists some $N \in \Z^+$ such that for all $n > N$, $g(x) - g_n(x) <
+    \eps$ for all $x \in F$. By pointwise convergence and continuity of $g$, 
+    for every $x\in F$, there exists
+    some $N_x$, $\delta_x$ such that $(g - g_n)(x') < \eps$ for all $x' \in (x-\delta_x, x+\delta_x)$.
+    Now, consider the open cover of $F$, $\cU = \{(x-\delta_x, x+\delta_x): x\in F\}$. Since $F$ is 
+    compact, there exists a finite subcover of $\cU$ which we denote as $\cU'$. 
+    Thus, let $N = \max_{(x-\delta_x, x+\delta_x) \in \cU'} N_x$. Then, by the monotonicity of $g_n$s,
+    it follows that for all $n > N$, $g(x) - g_n(x) < \eps$ for all $x \in F$. 
+    \item[8.] For any $\eps > 0$, define $n\in\Z^+$ such that 
+    \[
+        \sum_{i=1}^n \frac{1}{2^i} > 1 - \eps.     
+    \]
+    Also, let $E = \{1, 2, \ldots, n\}$. So, it follows by the definition of $\mu$ that $\mu(\Z^+\setminus E) < \eps$. 
+    Now, consider any sequence of functions $f_1, f_2,\ldots$ which converges pointwise to $f$. By the definition
+    of pointwise convergence, it must be that for fixed $\eps' > 0$, 
+    \[
+        \bigcup_{m=1}^\infty \bigcap_{k=m}^\infty \left\{x\in E: |f(x) - f_k(x)| < \eps'\right\} = E.   
+    \]
+    Since $E$ is finite, there must exist some $N \in \Z^+$ such that 
+    \[
+        \bigcup_{m=1}^N \bigcap_{k=m}^\infty \left\{x\in E: |f(x) - f_k(x)| < \eps'\right\} = E.
+    \]
+    Thus, it follows that if $k > N$, then $|f(x) - f_k(x)| < \eps'$ for all $x\in E$. Therefore, 
+    $f_1,f_2,\ldots$ converges uniformly on $E$. 
+
+    \item[9.] It suffices to show that for any fixed $1 \leq k \leq n$, if $x \in F_k$, then there exists 
+    some $\delta > 0$, such that $\Delta = (x-\delta_x, x + \delta_x)$ and for every $x' \in \Delta$, 
+    either $x' \in F_k$ or $x' \notin F_1 \cup \ldots F_{k-1} \cup F_{k+1} \cup \ldots \cup F_n$. If this is true,
+    then it follows that for every $x \in \dom(g)$, by the continuity of $g|_{F_k}$, there exists some $\delta > 0$
+    such that $|g(x) - g(x')| < \eps$ for all $x' \in \Delta$, where $\Delta = (x - \min(\delta, \delta_x), x + \min(\delta, \delta_x))$.
+
+    Fix some $1 \leq k \leq n$, and by way of contradiction suppose that for every $x\in F_k$ and every
+    $\delta_1, \delta_2,\ldots$ that converges to 0, there exists some $x_i' \in (x-\delta_i, x+\delta_i)$ 
+    such that $x' \in \bigcup_{i\neq k} F_i $. Then, clearly $x_1', x_2',\ldots$ convergs to $x$, but since 
+    each $x_i' \in \bigcup_{i\neq k} F_i$ and $\bigcup_{i\neq k} F_i$ is a closed set, it must be that 
+    $x \in \bigcup_{i\neq k} F_i$, which is a contradiction since each $F_k$ is disjoint. 
+    \item[10.] By way of contradiction, suppose that $F$ is not closed, then $F$ does not contain
+    all of its limit points. Thus, there exists a sequence $x_1, x_2, \ldots$ such that each $x_k \in F$,
+    but $\lim_{k\to\infty} x_k \notin F$. Let this limit point be denoted as $a$. Then, consider 
+    \[
+        g(x) = \frac{1}{x - a}.    
+    \]
+    It follows that $g(x)$ is continuous on $F$ since $a\notin F$, but $g(x)$ cannot be extended to a 
+    continuous function on $\R$. 
+    \item[11.] By way of contraposition, suppose that $F$ is not closed. Then, I show that 
+    not every continuous function can be extended to a continuous function on $\R$. If $F$ is not closed, then 
+    it does not contain all of its limit points. Thus, there exists a sequence $x_1, x_2, \ldots$ such that 
+    each point is in $F$, but $\lim_{k\to\infty} x_k = a\notin F$. Now, consider the function 
+    \[
+        g(x) = \sin\left(\frac{1}{x-a}\right).
+    \]
+    $g$ is continuinous every except at $a$, and $g$ is also bounded. However, $g$ cannot be extended to $a$, 
+    since its limit at $a$ does not exist.
+    \item[14.] Let us only consider the case where $x \notin \{b_1,b_2,\ldots\}$ since $\{b_1,b_2,\ldots\}$ is a measure-zero set.
+    From the definition of $f$, if $2^k|x -b_k| > 1$ for all $k \in \Z^+$, then $f(x) < 1$. So, consider the following set,
+    \[
+        A = \left\{x \in \R: 2^k|x-b_k| > 1, \forall k \in \Z^+\right\}.    
+    \]
+    It suffices to show that $|A| = \infty$ since $A \subset \{x \in \R: f(x) < 1\}$. So, if $x\in A$, then 
+    \[
+        x \notin \bigcup_{k=1}^\infty \left[b_k-\frac{1}{2^k}, b_k+\frac{1}{2^k}\right].    
+    \]
+    Now, 
+    \begin{align*}
+        |A| &\geq \left|\R \setminus \bigcup_{k=1}^\infty \left[b_k-\frac{1}{2^k}, b_k+\frac{1}{2^k}\right]\right|\\
+        &\geq |\R| - \sum_{k=1}^\infty \frac{1}{2^{k-1}}, \\
+        &= \infty.
+    \end{align*}
+    And since $A \subset \{x \in \R: f(x) < 1\}$ and outer measure preserves order, it must be that 
+    $|\{x \in \R: f(x) < 1\}| = \infty$.
+\end{enumerate}
+\end{document}

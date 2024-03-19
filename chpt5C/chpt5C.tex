@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 5C: Lebesgue Integration in $\R^n$}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+\usepackage{dsfont}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[4.] \begin{claim}
+        If $E \in \cB_n$ and $a \in \R^n$, then $a + E \in \cB_n$. 
+    \end{claim}
+    \begin{poc}
+        Let 
+        \[
+            \cE = \{E \in \cB_n : a + E \in \cB_n\}.
+        \]
+        Clearly, $\cE$ contains all open sets in $\cB_n$. Moreover, $\cE$ is closed under complements and countable unions since 
+        \[
+            a + (\R^n \setminus E) = \R^n \setminus (a + E) \quad \text{and} \quad a + \left(\bigcup_{k=1}^\infty E_k \right) = \bigcup_{k=1}^\infty (E_k + a).
+        \]
+        Thus, it follows that $\cE$ is a $\sigma$-algebra containing all open sets of $\R^n$. 
+        So, $\cB_n \subset \cE$. 
+    \end{poc}
+    \begin{claim}
+        For any $a \in \R^n$, $\lambda_n(E) = \lambda_n(E+ a)$.
+    \end{claim}
+    \begin{poc}
+        We proceed inductively. We have already shown that the Lebesgue measure on $\R$ is translation invariant. Now assume $n > 1$. We induct on $n$. If $A \in \cB_{n-1}, B \in \cB_1$, then it follows that 
+        \begin{align*}
+            \lambda_n((A \times B) + a) &= \lambda_{n}((A + a) \times (B + a)), \\
+            &= \lambda_{n-1}(A + a) \cdot \lambda_1 (B + a), \\
+            &= \lambda_{n-1}(A) \cdot \lambda(B), \\
+            &= \lambda_n (A \times B).
+        \end{align*}
+    \end{poc}
+    Now, we know that this holds true for all measurable rectangles in $\cB_{n-1}\otimes \cB_1$. Now, for $m\in\Z^+$, let $C_m$ be the open cube in $\R^n$ centered at the origin with side length $m$. Let \[
+        \cE_m = \{E \in \cB_n : E \subset C_m\,\text{and}\,\lambda_n(E + a) = \lambda_n(E)\}.
+    \]
+    It follows that all measurable rectangles that are a subset of $C_m$ are contained in $\cE_m$. Since any finite union of measurable rectangles can be written as a finite union of disjoint rectangles, it follows that $\cE_m$ contains the algebra of all measurable rectangles which are a subset of $C_m$. It remains to show that $\cE_m$ is a monotone class. Suppose $E_1 \subset E_2 \subset \ldots$, since any $E_k \subset C_m$, it must be that $\bigcup_{k=1}^\infty E_k \subset C_m$,
+    \begin{align*}
+        \lambda_n\left(a + \bigcup_{k=1}^\infty E_k\right) &= \lambda_n\left(\bigcup_{k=1}^\infty (E_k + a)\right), \\
+        &= \lim_{k\to\infty} \lambda(E_k + a), \\
+        &= \lim_{k\to\infty} \lambda(E_k).
+    \end{align*}
+    Since $\lambda_n(C_m) < \infty$, the decreasing case also follows by a similar derivation. So, $\cE_m$ is a $\sigma$-algbera containing all measurable rectangles which are a subset of $C_m$. Now, consider any arbitrary set $E \in \cB_n$, it follows that 
+    \[
+        \lambda_n(E+a) = \lim_{m\to\infty}\lambda_n(a + (E \cap C_m)) = \lim_{m\to\infty}\lambda_n(E \cap C_m) = \lambda_n(E).
+    \]
+    \item[5.] \begin{enumerate}
+        \item By continuity, $g(x) = tx$ for $t\in\R$ is $\cB_n$-measurable. Since by assumption $f$ is $\cB_n$-measurable and composition of measurable functions are measurable, it follows that $f \circ g = f_t$ is measurable.
+        \item It suffices to show that \[
+            |t|^n \int_{\R^n} f_t \dd\lambda_n = \int_{\R^n} f \dd\lambda_n.
+        \]
+        By the definition of Lebesgue integration, it follows that 
+        \begin{align*}
+        |t|^n \int_{\R^n} f_t\dd\lambda_n &= |t|^n \sup\left\{\sum_{k=1}^n \inf_{A_k}f_t(A_k)\lambda_n(A_k):A_1,\ldots,A_n\,\text{is a}\,t\cB_n\text{-partition}\right\}, \\
+        &= \sup\left\{\sum_{k=1}^n \inf_{tA_k}f(tA_k)\lambda_n(tA_k):A_1,\ldots,A_n\,\text{is a}\,t\cB_n\text{-partition}\right\}, \\
+        &= \sup\left\{\sum_{k=1}^n \inf_{A_k} f(A_k)\lambda_n(A_k):A_1,\ldots,A_n\,\text{is a}\,\cB_n\text{-partition}\right\}, \\
+        &= \int_{\R^n} f\dd\lambda_n.
+        \end{align*}
+        Note that the third equality follows from the fact that $t\R^n = \R^n$, thus the Borel sets are also dilation invariant. If we were working with a finite measure space, the first equality may no longer hold.
+    \end{enumerate}
+    \item[12.] \begin{enumerate}
+        \item Recall that \[
+            \lambda_n(\mathbf{B}_n) = \begin{cases}
+                \frac{\pi^{n/2}}{(n/2)!} &\text{if}\,n\,\text{is even}, \\
+                \\
+                \frac{2^{(n+1)/2}\pi^{(n-1)/2}}{1\cdot 3 \cdot 5 \cdot \ldots \cdot n} &\text{if}\,n\,\text{is odd}.
+            \end{cases}
+        \]
+        We separately prove that $\lambda_n(\mathbf{B}_n)$ converges to 0 for even and odd $n$, respectively. For any $n > 1$, by the definition of $(\cdot)!$,
+        \begin{align*}
+            \frac{\pi^{n/2}}{(n/2)!} &\leq \frac{\pi^{n/2}}{(n/4)^{(n/4)}}, \\
+            &\leq \frac{\pi^{n/2}}{(\pi^4)^{n/4}}, \tag{for any $n > 4\pi^4$} \\
+            &\leq \frac{\pi^{n/2}}{(\pi^2)^{n/2}}.
+        \end{align*}
+        And the last expression monotonically decreases as $n\to\infty$. Now, consider when $n$ is odd:
+        \begin{align*}
+            \frac{2^{(n+1)/2}\pi^{(n-1)/2}}{1\cdot 3 \cdot 5 \cdots n} &\leq \frac{(\sqrt{2\pi})^{(n/2)}}{1\cdot 3 \cdot 5 \cdots n}, \\
+            &\leq \frac{(\sqrt{2\pi})^{(n/2)}}{(n/2)^{(n/2)}}, \tag{for $n \geq 5$}\\
+            &\leq \left(\frac{\sqrt{2\pi}}{n/2}\right)^{n/2}.
+        \end{align*}
+        And the last expression decreases monotonically when $n > 2\sqrt{2\pi}$. Thus, $\lambda_n(\mathbf{B}_n) \to 0$ as $n\to\infty$.
+        \item $n=5$ is the maximum value.
+    \end{enumerate}
+\end{enumerate}
+\end{document}

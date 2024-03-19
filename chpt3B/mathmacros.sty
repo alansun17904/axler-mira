@@ -1,0 +1,71 @@
+\ProvidesPackage{mathmacros}
+
+\RequirePackage{amsmath}
+
+
+% Blackboard Bold
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\E}{\mathbf{E}}
+
+% Caligraphic caps
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+% Script caps
+\newcommand{\sA}{\mathscr{A}}
+\newcommand{\sB}{\mathscr{B}}
+\newcommand{\sC}{\mathscr{C}}
+\newcommand{\sD}{\mathscr{D}}
+\newcommand{\sE}{\mathscr{E}}
+\newcommand{\sF}{\mathscr{F}}
+\newcommand{\sG}{\mathscr{G}}
+\newcommand{\sI}{\mathscr{I}}
+\newcommand{\sL}{\mathscr{L}}
+\newcommand{\sP}{\mathscr{P}}
+\newcommand{\sS}{\mathscr{S}}
+\newcommand{\sT}{\mathscr{T}}
+\newcommand{\sU}{\mathscr{U}}
+\newcommand{\sX}{\mathscr{X}}
+\newcommand{\sY}{\mathscr{Y}}
+\newcommand{\sZ}{\mathscr{Z}}
+
+
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\phi}{\varphi}
+
+\newcommand*{\bigchi}{\mbox{\large$\chi$}}% big chi
+\DeclareMathOperator*{\argmax}{\arg\,\max}
+\DeclareMathOperator*{\argmin}{\arg\,\min}
+\DeclareMathOperator*{\dom}{dom}
+
+\newsavebox\diffdbox
+\newcommand{\dd}{{\mathpalette\makesl{d}}}
+\newcommand{\makesl}[2]{%
+  \begingroup
+  \sbox{\diffdbox}{$\mathsurround=0pt#1\mathrm{#2}$}%
+  \pdfsave
+  \pdfsetmatrix{1 0 0.2 1}%
+  \rlap{\usebox{\diffdbox}}%
+  \pdfrestore
+  \hskip\wd\diffdbox
+  \endgroup
+}

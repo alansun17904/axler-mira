@@ -1,0 +1,135 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 2A: Outer Measure}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\\~\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[1.] Since outer measure preserves order and $A\cup B \supset A$, then
+    $|A \cup B| \geq |A|$. Now, consider the sequence $A_1, A_2,\ldots$ such
+    that $A_1 = A$, $A_2 = B$, and $A_k = \emptyset$ for $k > 2$. It follows
+    from the countable subadditivity of outer measure that 
+    \begin{align*}
+        \left|\bigcup_{k=1}^\infty A_k \right| &= |A \cup B| \\
+        &\leq \sum_{k=1}^\infty |A_k| \\
+        &= |A| + |B| = |A|. \tag{by given}
+    \end{align*} 
+    Thus, $|A \cup B| = |A|$.
+
+    \item[2.] We first show that for any $A \subset \R$ that $\ell(tA) =
+    |t|\cdot \ell(A)$. If $t=0$, then since $tA = \emptyset$, $\ell(tA) = 0$.
+    Then, if $t > 0$, it follows that 
+    \begin{equation*}
+        tA = \begin{cases}
+            (ta, tb) & \text{if}\,A=(a,b), \\ 
+            (ta,\infty) & \text{if}\,A=(a,\infty), \\
+            (-\infty,ta) &\text{if}\,A=(-\infty,a), \\
+            \emptyset & \text{if}\,A=\emptyset.
+        \end{cases}
+    \end{equation*}
+    On the other hand, if $t < 0$, then 
+    \begin{equation*}
+        tA = \begin{cases}
+            (tb, ta) &\text{if}\, A=(a,b), \\
+            (-\infty,ta) &\text{if}\, A=(a,\infty), \\
+            (ta,\infty) &\text{if}\, A=(-\infty,a), \\
+            \emptyset &\text{if}\, A=\emptyset. 
+        \end{cases}
+    \end{equation*}
+    Thus, it follows that $\ell(tA) = |t|\cdot \ell(A)$, by the definition of
+    $\ell(\cdot)$. Note that if $t = 0$, then trivially, $|tA| = |\emptyset| =
+    0$. So, we only consider the case where $t \neq 0$. Consider a sequence of
+    open intervals $I_1, I_2, \ldots$ whose union contains $A$. It follows that
+    $tI_1, tI_2, \ldots$ is a sequence of open intervals whose union contains
+    $tA$. Then,
+    \begin{equation*}
+        |tA| \leq \sum_{k=1}^\infty |tI_k| = |t|\sum_{k=1}^\infty |I_k|,
+    \end{equation*}
+    by taking the \textit{infimum} over all such sequences, we have that $|tA|
+    \leq |t|\cdot |A|$. Now, observe that $|\frac{1}{t} (t A)| = |A|$, so 
+    \begin{equation*}
+        |t| \left|\frac{1}{t} (tA)\right| \leq |t| \sum_{k=1}^\infty \ell(\frac{1}{t}(tA)) 
+        \leq \frac{|t|}{|t|}\sum_{k=1}^\infty \ell(tI_k) = \sum_{k=1}^\infty |tI_k|.
+    \end{equation*}
+    Again, by taking the \textit{infimum} over all such sequences we have that
+    $|t|\cdot |A| \leq |tA|$. Thus, $|tA| = |t|\cdot |A|$. 
+
+    \item[3.] It suffices to show that $|B\setminus A| + |A| \geq |B|$. By the
+    subadditivity of outer measure, $|B\setminus A| + |A| \geq |(B\setminus A)
+    \cup A|$. Since $(B \setminus A)\cup A \supset B$ and outer measure
+    preserves order then $|(B\setminus A) \cup A| \geq |B|$. Thus, $|B\setminus
+    A| \geq |B| - |A|$. 
+
+    \item[9.] Suppose that $A$ is bounded, then there exists some $x, r \in \R$
+    such that $A \subset (x-r, x+r)$. Then, for any $t > \max\{|x-r|, |x+r|\}$,
+    it follows that $A \cap (-t, t) = A$. Thus, the limit expression holds when
+    $A$ is bounded. Now, consider the case where $A$ is unbounded. First, the
+    limit must exist since for any sequence of $t_k \to \infty$, it follows that
+    $|A \cap (-t_k,t_k)|$ is monotone. Moreover, it must be that $|A| \geq
+    \lim_{t\to\infty} |A\cap (-t,t)|$ since for any $t > 0$, $|A| \geq |A \cap
+    (-t,t)|$. So, it remains to show that $|A| \leq \lim_{t \to \infty} |A \cap
+    (-t, t)|$. 
+
+    
+
+    \item[11.] By the definition of outer measure, since
+
+
+    \item[12.] \begin{enumerate}[label=(\alph*)]
+        \item The arbitrary union of open sets is open. Thus,
+        $\bigcup_{k=1}^\infty (r_k - 1/2^k, r_k + 1/2^k)$ is open. And, by
+        definition, the complement of an open set is closed. So, $F$ is closed. 
+        \item By way of contradiction, suppose that there exists an interval $I
+        \subset F$ such that $I$ contains more than one element. That is, $I =
+        (a,b)$ for $a < b$. Then, it follows from the denseness of $\Q$ in $\R$
+        that there exists a rational number in $I$. Thus, there is an centered
+        around this rational number that is not contained in $F$. Thus, $I$ is
+        not connected and therefore, $I$ is not an interval. So, any intervals
+        in $F$ contain only one element. 
+        \item It follows from problem 3 that 
+        \begin{align*}
+            |F| &\geq |\R| - \left|\bigcup_{k=1}^\infty \left(r_k - \frac{1}{2^k}, r_k + \frac{1}{2^k}\right)\right|, \\
+            &\geq |\R| - \sum_{k=0}^\infty \frac{1}{2^k}, \\
+            &\geq |\R| - 2, \\
+            &\geq \infty.
+        \end{align*}
+    \end{enumerate}
+\end{enumerate}
+\end{document}

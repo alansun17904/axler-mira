@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[margin=1in,includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage{mathmacros}
+
+\fancyhead[L]{Measure Theory}
+\fancyhead[R]{Alan Sun}
+\fancyhead[c]{Chapter 2D: Lebesgue Measure}
+\fancyfoot{}
+
+\fancyfoot[R]{\thepage}
+\pagestyle{fancy}
+
+\fancypagestyle{firstpage}{ \fancyfoot[L]{
+    \emph{Measure, Integration, and Real Analysis by Sheldon Axler}
+}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{mathrsfs}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{wasysym}
+
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{remark}
+\newtheorem{claim}{Claim}
+\newenvironment{poc}{\textit{Proof of claim:}}{\qed\\}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\newlist{legal}{enumerate}{10}
+\setlist[legal]{label*=\arabic*.}
+
+
+\begin{document}
+\thispagestyle{firstpage}
+\begin{enumerate}[leftmargin=*]
+    \item[5.] From the equivalent definitions of the Lebesgue measurable sets,
+    there must exist a sequence of closed sets $F_1, F_2, \ldots$ where $F_k
+    \subset A$ and 
+    \[
+        \left|A \setminus \bigcup_{k=1}^{\infty} F_k\right| = 0.
+    \]
+    Since any finite union of closed sets is closed, then it follows that $F_1,
+    F_1 \cup F_2, F_1 \cup F_2 \cup F_3, \ldots$, is a sequence of increasing
+    closed sets also contained in $A$. And since $\bigcup_{k=1}^\infty F_k =
+    \bigcup_{k=1}^\infty \bigcup_{\ell=1}^k F_\ell$, then the previous equation
+    holds.
+    \item[6.] Let us first assume that $A$ is a Lebesgue measurable set. Then,
+    first consider the following claim:
+    \begin{claim}\label{claim:closed-bounded}
+        If $|A| < \infty$, then for every $\eps >0$, there exists a closed,
+        bounded set $F \subset A$ such that $|A \setminus F| < \eps$. 
+    \end{claim}
+    \begin{poc}
+        By problem 9 in section 2A, for any set $A \subset \R$, it follows that 
+        \[
+            \lim_{t\to\infty} |(-t,t) \cap A| = |A|.    
+        \]
+        From the definition of the limit, for any $\eps > 0$, there exists some
+        $t\in\R$ such that $|A \setminus \left((-t,t)\cap A\right)| = |A| -
+        |(-t, t)\cap A| < \eps$. For any $t \in \R$, $(-t, t) \cap A$ is
+        bounded. Moreover, $(-t, t) \cap A$ must be a Lebesgue measurable set
+        (since every Borel set is also a Lebesgue measurable set). Since $(-t,
+        t) \cap A$ is a Lebesgue measurable set, there must exist a closed set
+        $F \subset (-t, t) \cap A$ such that $|(-t, t) \cap A \setminus F| <
+        \eps$. Then, by countable additivity, it must be that $|A \setminus F| =
+        |A \setminus (-t, t)\cap A| + |(-t, t) \cap A \setminus F| < 2\eps$.
+    \end{poc}
+    Now, we show the forward claim:
+    \begin{claim}
+        If $A$ is Lebesgue measurable $|A| < \infty$, then for every $\eps > 0$,
+        there exists $G$, a union of finite, disjoint, bounded open intervals
+        such that $|G \Delta A| < \eps$. 
+    \end{claim}
+    \begin{poc}
+        % Recall that if $A$ is Lebesgue measurable, then for all $\eps > 0$,
+        % there exists an open set $G \supset A$ such that $|G \setminus A| <
+        % \eps$ and by assumption $|A \setminus G| = 0$. Since $G$ is open, it
+        % must be the disjoint union of countable open intervals: $G_1, G_2,
+        % \ldots$. Note that any $G_k$ must be bounded otherwise, $|A| \geq
+        % \infty$.  
+        % And, there exists a closed set $F \subset A$ such that $|A \setminus F|
+        % < \eps$. Now, it remains to show that we can actually construct a finite
+        % union of these open intervals.
+
+        By claim~\ref{claim:closed-bounded}, it follows that there exists a closed, bounded set $F \subset A$
+        such that $|A \setminus F| < \eps$. Since $F$ is a Borel set, there must be a open cover $G \supset F$
+        such that $|G \setminus F| < \eps$. $G$ is the union of finite disjoint open intervals $G_1, G_2,\ldots$,
+        by the Heine-Borel theorem, there exists a finite subcover of $G' = \bigcup\{G_k\}_{k=1}^n$ of these open intervals. 
+        Note that because $F$ is bounded and $|G\setminus F| < \eps$ each of these open intervals must also be bounded.
+        Since $F\subset G' \subset G$, it must be that $|G' \setminus F| < \eps$. So,
+        \begin{align*}
+            |G' \Delta A| &= |G' \setminus A| + |A \setminus G'|, \\
+            &\leq |G' \setminus F| + |A \setminus F|, \\
+            &< 2\eps.
+        \end{align*}
+    \end{poc}
+    Now, for the converse:
+    \begin{claim}
+        By the definition of outer measure, there exists a sequence of open intervals $\{I_k\}_{k=1}^\infty$ 
+        such that $|\bigcup_{k=1}^\infty I_k| < |A\setminus G| + \eps$. Thus, it follows that $G\cup \bigcup_{k=1}^\infty I_k$
+        is open and $|G\cup \bigcup_{k=1}^\infty I_k| < |A| + 2\eps$.  
+    \end{claim}
+    \item[12.] The forward is trivial and follows directly from the definition of the Lebesgue measure 
+    since $A, (b,c) \setminus A$ are disjoint. Now, we show the converse directly,
+    \begin{claim}
+        If $A \subset (b,c)$ and $|A| + |(b,c) \setminus A| = c - b$, then $A$ is Lebesgue measurable.
+    \end{claim}
+    \begin{poc}
+        By the definition of outer measure, there exists a sequence of open intervals $\{I_k\}_{k=1}^\infty$
+        such that $|\bigcup_{k=1}^\infty I_k| < |(b,c)\setminus A| + \eps$. Now consider $B = [b+\eps,c-\eps] \setminus \bigcup_{k=1}^\infty I_k$.
+        such that $\eps < \min\{b,c\}$. It follows that $B$ is a closed subset of $A$. It remains to show that $A \setminus B$ can
+        be made arbitrarily small. By order-preservation of outer measure $|B| \leq |A|$ and since $B$ is closed, 
+        \begin{align*}
+            |A \setminus B| &= |A| - |B|, \\
+            |B| &> (c-b+2\eps) - \left(|(b,c)\setminus A| + \eps\right), \\
+            &= (c-b+2\eps) - \left((c-b) - |A| + \eps\right), \\
+            &= |A| + \eps.
+        \end{align*}
+        Then, it follows that $|A| - |B| < \eps$. So, $A$ is Lebesgue measurable.
+    \end{poc}
+    \item[13.] It must be that $(-n,n) \cap A \subset (-n,n)$. So, let $B = (-n,n) \cap A$. Then,
+    $(-n,n) \setminus A = (-n,n) \setminus B$. Since 
+    \begin{align*}
+        x \in (-n,n) \setminus A &\iff x \in (-n,n) \,\text{and}\, x\notin \setminus A, \\
+        &\iff x \in (-n,n) \,\text{and}\, x \notin A \cap (-n,n), \\
+        &\iff x \in (-n,n)\setminus B.
+    \end{align*}
+    So, by problem 12 in this section, this equality only holds if and only if $(-n,n) \cap A$ is Lebesgue 
+    measurable for all $n\in \Z^+$. Thus, in the limit as $n\to\infty$, the equality only holds as $A$ is 
+    Lebesgue measurable.
+    \item[24.] \begin{enumerate}[label=(\alph*)]
+        \item Follows directly from claim~\ref{claim:closed-bounded}. Since this holds for every $\eps > 0$, and the 
+        limit in claim~\ref{claim:closed-bounded} is monotonically increasing, then it must exist and so 
+        $\sup_{t\in\R} |F| = |A|$. 
+        \item Consider the Vitali set.
+    \end{enumerate}
+\end{enumerate}
+\end{document}
